@@ -9,3 +9,5 @@ License: GPL-2
 LazyData: TRUE
 URL: https://github.com/braunr/TimeStampR
 BugReports: https://github.com/braunr/TimeStampR/issues
+Imports: glmnet
+Suggests: limma, ggplot2, gdata, tximport
