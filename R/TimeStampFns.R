@@ -68,7 +68,7 @@ recalibrateExprs <- function(exprMat,subjectIDs){
 # FNS FOR MODELING X&Y CLOCK COORDS
 #=====================================================================
 
-trainTimeStamp <- function(expr,subjIDs,times,trainFrac=0.5,plot=FALSE,recalib=FALSE,...){
+trainTimeStamp <- function(expr,subjIDs,times,trainFrac=0.5,a=0.5,s=NULL,plot=FALSE,recalib=FALSE,...){
 	stopifnot(require(glmnet))
 	out <- list()
 	# select trainFrac subjects to be the training set
@@ -84,10 +84,13 @@ trainTimeStamp <- function(expr,subjIDs,times,trainFrac=0.5,plot=FALSE,recalib=F
 	}
 	y <- time2XY(times)
 	# do the fit
-	out$cv.fit <- cv.glmnet(x[train,],y[train,],family="mgaussian")
-	out$coef <- as.matrix(do.call(cbind,coef(out$cv.fit, s=out$cv.fit$lambda.min)))
+	out$cv.fit <- cv.glmnet(x[train,],y[train,],keep=T,a=a,family="mgaussian",...)
+	if(is.null(s)){
+		s <- out$cv.fit$lambda.min
+	}
+	out$coef <- as.matrix(do.call(cbind,coef(out$cv.fit, s=s)))
 	out$coef <- out$coef[rowSums(out$coef!=0)>0,][-1,]
-	out$pred <- XY2dectime(predict(out$cv.fit,x,s=out$cv.fit$lambda.min)[,,1])
+	out$pred <- XY2dectime(predict(out$cv.fit,x,s=s)[,,1])
 	if(plot){
 		dectime <- time2dectime(times)
 		errplot(dectime,out$pred,col=2-train)
@@ -109,7 +112,7 @@ predTimeStamp <- function(timestamp,newx=NULL,s=timestamp$cv.fit$lambda.min){
 # FNS FOR CALCULATING PREDICTION ERROR MODULO 24
 #=====================================================================
 
-timeErr <- function(trueTimes,predTimes){
+timeErr <- function(trueTimes,predTimes,...){
 	predTimes <- predTimes%%24
 	trueTimes <- trueTimes%%24
 	timeDiffs <- abs(predTimes-trueTimes)
@@ -117,7 +120,7 @@ timeErr <- function(trueTimes,predTimes){
 	return(timeDiffs)
 }
 
-timeErrSigned <- function(trueTimes,predTimes){
+timeErrSigned <- function(trueTimes,predTimes,...){
 	predTimes <- predTimes%%24
 	trueTimes <- trueTimes%%24
 	timeDiffs <- predTimes-trueTimes
