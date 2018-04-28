@@ -1,13 +1,13 @@
-Package: TimeStampR
+Package: TimeSignatR
 Type: Package
-Title: TimeStamp: Time Detection from Gene Expression
+Title: TimeSignatR: Time Detection from Gene Expression
 Version: 0.1.0
 Author: Rosemary Braun
 Maintainer: Rosemary Braun <rbraun@northwestern.edu>
-Description: A package to carry out the algorithm described in Braun et al, "TimeStamp: A Universal Method for Robust Detection of Circadian State from Gene Expression"
+Description: A package to carry out the algorithm described in Braun et al, "TimeSignature: A Universal Method for Robust Detection of Circadian State from Gene Expression"
 License: GPL-2
 LazyData: TRUE
-URL: https://github.com/braunr/TimeStampR
-BugReports: https://github.com/braunr/TimeStampR/issues
+URL: https://github.com/braunr/TimeSignatR
+BugReports: https://github.com/braunr/TimeSignatR/issues
 Imports: glmnet
 Suggests: limma, ggplot2, gdata, tximport
