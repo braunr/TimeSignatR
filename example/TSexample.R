@@ -142,7 +142,7 @@ predplot <- function(trueHr,predHr,col=1,pch=1,main="Time of Day (24h)",...){
 
 trainDat <- all.expr[,all.meta$train==1]
 trainSubjs <- all.meta[all.meta$train==1,"ID"]
-trainTimes <- all.meta[all.meta$train==1,"ZT"]
+trainTimes <- all.meta[all.meta$train==1,"LocalTime"]
 # within-subject normalization using all timepoints
 trainWSN <- recalibrateExprs(trainDat, trainSubjs)
 
@@ -168,13 +168,13 @@ TSorig <- trainTimeStamp(
 
 
 # First, get all the times at which each subject has data
-all.times.by.subj <- split(all.meta[,c("samp","ZT")],all.meta$sID)
+all.times.by.subj <- split(all.meta[,c("samp","LocalTime")],all.meta$sID)
 
 # Function to identify the antipodal point in that list
 findAntipode <- function(time.by.subj){
 	antipodes <- lapply(rownames(time.by.subj),function(thisSamp){
-		thisTime <- time.by.subj[thisSamp,"ZT"]
-		availTimes <- time.by.subj$ZT
+		thisTime <- time.by.subj[thisSamp,"LocalTime"]
+		availTimes <- time.by.subj$LocalTime
 		names(availTimes) <- rownames(time.by.subj)
 		availTimes[thisSamp] <- NA # don't choose self
 		antipTime <- thisTime+12
@@ -183,10 +183,10 @@ findAntipode <- function(time.by.subj){
 		out <- list(
 			samp=thisSamp,
 			asamp= antipSamp,
-			ZT=thisTime,
-			aZT= availTimes[antipSamp]
+			LocalTime=thisTime,
+			aLocalTime= availTimes[antipSamp]
 		)
-		out$ZTdiff <- timeErr(out$ZT,out$aZT)
+		out$LocalTimediff <- timeErr(out$LocalTime,out$aLocalTime)
 		return(data.frame(out,stringsAsFactors=F))
 	})
 	return(do.call(rbind,antipodes))
@@ -239,37 +239,37 @@ all.meta.split <- split(all.meta, all.meta$study)
 
 # Train/Test data (Moller) - TEST SAMPLES ONLY 
 TSauc <- with(all.meta.split$TrTe[all.meta.split$TrTe$train==0,],
-	predplot(ZT,TSpred,plot=T,main="Test Set (Moller &al)",col=cond))
+	predplot(LocalTime,TSpred,plot=T,main="Test Set (Moller &al)",col=cond))
 PLSauc <- with(all.meta.split$TrTe[all.meta.split$TrTe$train==0,],
-	tolplot(ZT, PLSpred,add=T,col="purple",lty=2))
+	tolplot(LocalTime, PLSpredLT,add=T,col="purple",lty=2))
 ZZauc <- with(all.meta.split$TrTe[all.meta.split$TrTe$train==0,],
-	tolplot(ZT, ZZpred,add=T,col="cyan4",lty=3))
+	tolplot(LocalTime, ZZpredLT,add=T,col="cyan4",lty=3))
 statLegend()
 
 # V1 validation data (Archer) 
 TSauc <- with(all.meta.split$V1,
-	predplot(ZT,TSpred,plot=T,main="Validation V1 (Archer &al)",col=cond))
+	predplot(LocalTime,TSpred,plot=T,main="Validation V1 (Archer &al)",col=cond))
 PLSauc <- with(all.meta.split$V1,
-	tolplot(ZT, PLSpred,add=T,col="purple",lty=2))
+	tolplot(LocalTime, PLSpredLT,add=T,col="purple",lty=2))
 ZZauc <- with(all.meta.split$V1,
-	tolplot(ZT, ZZpred,add=T,col="cyan4",lty=3))
+	tolplot(LocalTime, ZZpredLT,add=T,col="cyan4",lty=3))
 statLegend()
 
 # V2 validation data (Arnardottir &al) 
 TSauc <- with(all.meta.split$V2,
-	predplot(ZT,TSpred,plot=T,main="Validation V2 (Arnardottir &al)",col=cond))
+	predplot(LocalTime,TSpred,plot=T,main="Validation V2 (Arnardottir &al)",col=cond))
 PLSauc <- with(all.meta.split$V2,
-	tolplot(ZT, PLSpred,add=T,col="purple",lty=2))
+	tolplot(LocalTime, PLSpredLT,add=T,col="purple",lty=2))
 ZZauc <- with(all.meta.split$V2,
-	tolplot(ZT, ZZpred,add=T,col="cyan4",lty=3))
+	tolplot(LocalTime, ZZpredLT,add=T,col="cyan4",lty=3))
 statLegend()
 
 # V3 validation data (new RNA-seq) 
 TSauc <- with(all.meta.split$V3,
-	predplot(ZT,TSpred,plot=T,main="Validation V3 (new RNA-seq)",col=1))
+	predplot(LocalTime,TSpred,plot=T,main="Validation V3 (new RNA-seq)",col=1))
 PLSauc <- with(all.meta.split$V3,
-	tolplot(ZT, PLSpred,add=T,col="purple",lty=2))
+	tolplot(LocalTime, PLSpredLT,add=T,col="purple",lty=2))
 ZZauc <- with(all.meta.split$V3,
-	tolplot(ZT, ZZpred,add=T,col="cyan4",lty=3))
+	tolplot(LocalTime, ZZpredLT,add=T,col="cyan4",lty=3))
 statLegend()
 
