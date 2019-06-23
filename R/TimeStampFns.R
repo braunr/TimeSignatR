@@ -84,7 +84,7 @@ trainTimeStamp <- function(expr,subjIDs,times,trainFrac=0.5,a=0.5,s=NULL,plot=FA
 	}
 	y <- time2XY(times)
 	# do the fit
-	out$cv.fit <- cv.glmnet(x[train,],y[train,],keep=T,a=a,family="mgaussian",...)
+	out$cv.fit <- cv.glmnet(x[train,],y[train,],keep=T,alpha=a,family="mgaussian",...)
 	if(is.null(s)){
 		s <- out$cv.fit$lambda.min
 	}
