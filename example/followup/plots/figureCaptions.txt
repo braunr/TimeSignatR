@@ -1,0 +1,6 @@
+Data and scripts to reproduce these figures may be found in:
+  http://github.com/braunr/TimeSignatR/example/followup
+
+Figure 1: Comparison of circadian and clock time measurements in study subjects. Left, distribution of DLMO25 times for all subject-days with melatonin data (n=89, combined data from three studies: Moller-Levet 2013, Archer 2014, Braun 2018); the median DLMO25 was 23:10. Right, local clock time vs. circadian phase (hours since DLMO25) for all samples with available melatonin data.
+
+Figure 2: TimeSignature predictions of melatonin phase (represented as hours since DLMO, time at which 25% of maximum blood melatonin was reached). "mTS" refers to TimeSignature predictions for time since DLMO25 when trained using time since DLMO25 as the outcome in the training data, while "oTS" refers to TimeSignature predictions for time since DLMO25 using the original, local-time-trained predictor reported in [1]. Because of the close relationship between local time and DLMO25 (Fig 1), these are similar, though the melatonin-trained predictor is more accurate (as expected). Also shown are comparisons to the PLSR ("mPL") and differential PLSR ("dPL") models, both trained on time since DLMO25 in the same set of samples used for TimeSignature.
