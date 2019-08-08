@@ -6,7 +6,7 @@ The purpose of this analysis was fourfold:
 
 2) To demonstrate, in subjects with available melatonin data, that the output produced by TimeSignature as originally trained and published (Braun 2018) are an accurate prediction of circadian phase (hrs since DLMO25), as would be expected due to (1) above [plots/letterFig2.pdf, "oTS"];
 
-3) To demonstrate, in subjects with available melatonin data, that when trained using circadian phase (rather than local time) as the outcome, TimeSignature produces highly accurate predictions of circadian phase across data from multiple studies and platforms [plots/letterFig2.pdf, top & "oTS"]; 
+3) To demonstrate, in subjects with available melatonin data, that when trained using circadian phase (rather than local time) as the outcome, TimeSignature produces highly accurate predictions of circadian phase across data from multiple studies and platforms [plots/letterFig2.pdf, top & "mTS"]; 
 
 4) To demonstrate that TimeSignature produces more accurate and more stable (across studies) predicitions of circadian phase than both the PLSR model and the two-timepoint "differential PLSR" model [plots/letterFig2.pdf, bottom].
 
