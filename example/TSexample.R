@@ -9,6 +9,12 @@
 #   assumes TimeStampR/example is the current working directory
 #=====================================================================
 
+# For exact reproducibility, we set both the RNG sampler and the
+# seed to what was used in the paper.  Note that older versions
+# of R (including the one used for the paper) implement a rounding 
+# RNG sampler that has non-uniform properties; this is NOT an issue 
+# for the present application, but R will generate a warning anyway.
+RNGversion("3.5.1")
 set.seed(194) 
 
 library(limma)
